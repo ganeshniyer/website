@@ -24,6 +24,20 @@ sees.  The simplest way to do this is to run an interactive busybox Pod:
 kubectl run -it --rm --restart=Never busybox --image=gcr.io/google-containers/busybox sh
 ```
 
+Alternatively you can run the command directly from the pod. For example, let us say we wish to run nslookup for an existing service `servicesample` and store the output in nslookupout.txt. Then the command will be 
+
+```none
+kubectl run test-nslookup --image=busybox:1.28 --rm -it --restart=Never  -- nslookup servicesample > nslookupout.txt
+```
+
+Suppose you want to perform nslookup against an existing pod itself (say the pod ip is 10.244.1.13 in the default namespace), then the command would be 
+
+```none
+kubectl run test-nslookup --image=busybox:1.28 --rm -it --restart=Never  -- nslookup 10-244-1-13.default.pod > nslookupout.txt
+```
+
+Note that in this case, we have provided the automatically assigned service name of the pod with ip address specified with a '-' instead of '.'. 
+
 {{< note >}}
 If you don't see a command prompt, try pressing enter.
 {{< /note >}}
